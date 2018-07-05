@@ -1,0 +1,75 @@
+<!-- IMPORT MODULE DETAIL -->
+<!-- 
+
+	Module : 	ItemList
+	
+	Links : 	ItemEdit
+					/items/{id}
+.				
+	
+	Nesteds : 	
+				
+-->
+<!-- /IMPORT MODULE DETAIL -->
+<div ng-controller="ItemListController">
+	
+	<h1>ItemList</h1>
+	
+	<!-- SEARCH FORM -->
+	<div class="well">
+	    <form name="form_search" class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3">
+					<label for="Description">Description</label>
+				</div>
+				<div class="col-sm-9 form-group" >
+					<input type="text" ng-model="search.Description" class="form-control" name="Description" id="Description" >
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<label for="Name">Name</label>
+				</div>
+				<div class="col-sm-9 form-group" >
+					<input type="text" ng-model="search.Name" class="form-control" name="Name" id="Name" >
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<label for="Price">Price</label>
+				</div>
+				<div class="col-sm-9 form-group" >
+					<input type="number" ng-model="search.Price" class="form-control" name="Price" id="Price" >
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<!-- TABLE -->
+	<table class="table table-condensed table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>_id</th>
+				<th>Description</th>
+				<th>Name</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in list | filter: {  Description:search.Description,  Name:search.Name,  Price:search.Price,  }">
+				<td ng-bind="item._id" ng-link="/items/{{item._id}}"></td>
+				<td ng-bind="item.Description"></td>
+				<td ng-bind="item.Name"></td>
+				<td ng-bind="item.Price"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="mb-20" ng-if="list.$resolved && (list | filter :{   Description:search.Description,  Name:search.Name,  Price:search.Price,  }).length == 0">
+        <b>No result found</b>
+    </div>
+
+	<!-- BUTTON -->
+	<button class="btn btn-primary" ng-link="/items/new">New</button>
+	
+</div>

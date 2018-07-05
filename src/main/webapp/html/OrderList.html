@@ -1,0 +1,75 @@
+<!-- IMPORT MODULE DETAIL -->
+<!-- 
+
+	Module : 	OrderList
+	
+	Links : 	OrderEdit
+					/orders/{id}
+.				
+	
+	Nesteds : 	
+				
+-->
+<!-- /IMPORT MODULE DETAIL -->
+<div ng-controller="OrderListController">
+	
+	<h1>OrderList</h1>
+	
+	<!-- SEARCH FORM -->
+	<div class="well">
+	    <form name="form_search" class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3">
+					<label for="OrderDate">OrderDate</label>
+				</div>
+				<div class="col-sm-9 form-group" >
+					<input type="date" ng-model="search.OrderDate" class="form-control" name="OrderDate" id="OrderDate" >
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<label for="OrderTotal">OrderTotal</label>
+				</div>
+				<div class="col-sm-9 form-group" >
+					<input type="number" ng-model="search.OrderTotal" class="form-control" name="OrderTotal" id="OrderTotal" >
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<label for="Qty">Qty</label>
+				</div>
+				<div class="col-sm-9 form-group" >
+					<input type="number" ng-model="search.Qty" class="form-control" name="Qty" id="Qty" >
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<!-- TABLE -->
+	<table class="table table-condensed table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>_id</th>
+				<th>OrderDate</th>
+				<th>OrderTotal</th>
+				<th>Qty</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in list | filter: {  OrderDate:dateFilter(search.OrderDate),  OrderTotal:search.OrderTotal,  Qty:search.Qty,  }">
+				<td ng-bind="item._id" ng-link="/orders/{{item._id}}"></td>
+				<td ng-bind="item.OrderDate | date"></td>
+				<td ng-bind="item.OrderTotal"></td>
+				<td ng-bind="item.Qty"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="mb-20" ng-if="list.$resolved && (list | filter :{   OrderDate:dateFilter(search.OrderDate),  OrderTotal:search.OrderTotal,  Qty:search.Qty,  }).length == 0">
+        <b>No result found</b>
+    </div>
+
+	<!-- BUTTON -->
+	<button class="btn btn-primary" ng-link="/orders/new">New</button>
+	
+</div>
